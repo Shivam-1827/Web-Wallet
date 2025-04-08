@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export default function TransferCrypto() {
   const [crypto, setCrypto] = useState("ETH");
@@ -10,6 +11,7 @@ export default function TransferCrypto() {
   const [wallets, setWallets] = useState<any[]>([]);
   const [selectedWallet, setSelectedWallet] = useState<any>(null);
   const [error, setError] = useState("");
+  const router = useRouter();
 
   useEffect(() => {
     const fetchWallets = async () => {
@@ -67,6 +69,7 @@ export default function TransferCrypto() {
         alert("Transfer successful!");
         setAmount("");
         setReceiver("");
+        router.push("/homePage");
       } else {
         setError(res.data.error || "Transfer failed");
       }
@@ -113,7 +116,7 @@ export default function TransferCrypto() {
           <input
             value={receiver}
             onChange={(e) => setReceiver(e.target.value)}
-            className="w-full p-3 border border-gray-300 rounded-xl text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+            className="w-full p-3 text-gray-600 border border-gray-300 rounded-xl text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
             placeholder="Enter recipient's public key"
           />
         </div>
@@ -125,7 +128,7 @@ export default function TransferCrypto() {
             onChange={(e) => setAmount(e.target.value)}
             type="number"
             min="0"
-            className="w-full p-3 border border-gray-300 rounded-xl text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+            className="w-full p-3 text-gray-600 border border-gray-300 rounded-xl text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
             placeholder="Enter amount to send"
           />
         </div>
