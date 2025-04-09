@@ -22,10 +22,9 @@ export async function POST(req: NextRequest) {
 
     const userId = decoded.id;
 
-    // Fetch user's mnemonic and wallets
     const userMnemonic = await prisma.userMnemonic.findFirst({
       where: { userId },
-      include: { wallets: true },
+      include: { wallets: true }, 
     });
 
     if (!userMnemonic) {
@@ -35,10 +34,9 @@ export async function POST(req: NextRequest) {
     const mnemonic = userMnemonic.mnemonic;
     const existingWallets = userMnemonic.wallets;
 
-    // Account index = how many sets of 4 wallets the user already has
     const accountIndex = Math.floor(existingWallets.length / 4);
 
-    // Generate seed and root node
+    
     const seed = await mnemonicToSeed(mnemonic);
     const rootNode = HDNodeWallet.fromSeed(seed);
 
@@ -48,11 +46,9 @@ export async function POST(req: NextRequest) {
     for (let i = 0; i < walletTypes.length; i++) {
       const walletType = walletTypes[i];
 
-      // Use unique derivation path: accountIndex determines account group
       const path = `m/44'/${getCoinType(walletType)}'/${accountIndex}'/0/${i}`;
       const child = rootNode.derivePath(path);
 
-      // Check for existing address (should not happen if paths are unique, but still safe)
       const existing = await prisma.wallet.findUnique({
         where: { address: child.address },
       });
@@ -62,7 +58,6 @@ export async function POST(req: NextRequest) {
         continue;
       }
 
-      // Create new wallet in DB
       const wallet = await prisma.wallet.create({
         data: {
           type: walletType,
