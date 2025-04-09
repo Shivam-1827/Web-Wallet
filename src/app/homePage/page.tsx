@@ -5,8 +5,6 @@ import axios from "axios";
 import { ArrowDownCircle, ArrowUpCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-
-// Types
 type Balance = {
   id: string;
   token: string;
@@ -32,7 +30,6 @@ export default function MetaVaultHomePage() {
     router.push("/transfer");
   };
 
-  // Fetch on mount
   useEffect(() => {
     fetchAccounts();
   }, []);
@@ -58,8 +55,8 @@ export default function MetaVaultHomePage() {
     setLoading(true);
     try {
       await axios.post("/api/v1/createAccount");
-      await fetchAccounts(); // refresh data
-      setSelectedAccountIndex(accounts.length); // select newly created account
+      await fetchAccounts();
+      setSelectedAccountIndex(accounts.length); 
     } catch (err) {
       console.error("Failed to create account", err);
     }
@@ -70,7 +67,6 @@ export default function MetaVaultHomePage() {
 
   return (
     <div className="min-h-screen bg-white text-black">
-      {/* Navbar */}
       <nav className="flex justify-between items-center px-6 py-4 bg-gray-100 shadow-md">
         <h1 className="text-xl font-bold">Welcome to MetaVault {username}</h1>
 
@@ -99,7 +95,6 @@ export default function MetaVaultHomePage() {
         </div>
       </nav>
 
-      {/* Transfer Button */}
       {currentWallets.length > 0 && (
         <div className="flex justify-end gap-4 px-6 mt-6">
         <button className="flex items-center gap-2 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold px-5 py-2 rounded-2xl shadow-lg transition-all duration-200" 
@@ -116,7 +111,6 @@ export default function MetaVaultHomePage() {
       
       )}
 
-      {/* Wallets Display */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
         {currentWallets.map((wallet) => {
           const balanceObj = wallet.balances.find(

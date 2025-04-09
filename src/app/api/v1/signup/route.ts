@@ -66,7 +66,6 @@ export async function POST(req: NextRequest) {
       },
     });
     
-    // Generate consistent JWT token (same structure as signin)
     const payload = { 
       id: newUser.id, 
       username: newUser.username,

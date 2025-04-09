@@ -1,7 +1,6 @@
-// app/api/v1/transfer/route.ts
-import { NextRequest, NextResponse } from "next/server";
-import prisma from "./../../../../lib/db"; // Adjust path if needed
 
+import { NextRequest, NextResponse } from "next/server";
+import prisma from "./../../../../lib/db"; 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();

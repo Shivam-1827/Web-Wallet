@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
-import prisma from "./../../../../lib/db"; // Adjust the path as needed
-
+import prisma from "./../../../../lib/db"; 
 export async function GET(req: NextRequest) {
   try {
     const token = req.cookies.get("token")?.value;

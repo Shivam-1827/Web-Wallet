@@ -18,7 +18,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    // Check if user already has a mnemonic
     const checkExisting = await prisma.userMnemonic.findFirst({
       where: { userId },
     });

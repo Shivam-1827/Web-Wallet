@@ -21,7 +21,6 @@ export async function POST(req: NextRequest) {
     
     const { username, password } = parsed.data;
     
-    // Find user by username
     const user = await prisma.user.findUnique({
       where: { username },
     });
@@ -35,7 +34,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Invalid credentials" }, { status: 401 });
     }
     
-    // Generate consistent token payload (same structure as signup)
     const payload = { 
       id: user.id, 
       username: user.username,
@@ -53,7 +51,6 @@ export async function POST(req: NextRequest) {
       },
     });
     
-    // Set secure HTTP-only cookie
     response.cookies.set({
       name: "token",
       value: token,
