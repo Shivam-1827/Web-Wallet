@@ -16,6 +16,7 @@ export async function POST(req: NextRequest) {
     try {
       decoded = jwt.verify(token, process.env.SECRET_KEY || "mysecretkey");
     } catch (err) {
+      console.error("Invalid token:", err);
       return NextResponse.json({ error: "Invalid token" }, { status: 401 });
     }
 
@@ -57,7 +58,7 @@ export async function POST(req: NextRequest) {
       });
 
       if (existing) {
-        console.warn(`⚠️ Wallet address already exists: ${child.address}, skipping...`);
+        console.warn(`Wallet address already exists: ${child.address}, skipping...`);
         continue;
       }
 
@@ -84,7 +85,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: true, wallets: newWallets });
 
   } catch (err) {
-    console.error("❌ Create Account Error:", err);
+    console.error("Create Account Error:", err);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }
