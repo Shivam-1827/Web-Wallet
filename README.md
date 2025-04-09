@@ -141,6 +141,8 @@ yarn test
 
 This project is intended for educational purposes only. It uses simulated balances and does not connect to actual blockchain networks. Do not use it to store or transfer real cryptocurrency.
 
+Live Project Url: [[https://metavault-mocha.vercel.app/](https://metavault-mocha.vercel.app/)]
+
 
 ---
 
